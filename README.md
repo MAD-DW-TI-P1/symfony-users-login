@@ -19,7 +19,9 @@ Instalación de Symfony y creación de test
 - composer require form validator twig-bundle security-csrf annotations
 - composer require symfony/security-bundle
 - composer require symfonycasts/verify-email-bundle
-- composer require symfony/mailer  
+- composer require symfony/mailer 
+- composer require --dev symfony/profiler-pack 
+- composer require "lexik/jwt-authentication-bundle"
 
 
 
@@ -29,7 +31,10 @@ Instalación de Symfony y creación de test
 - php bin/console make:user (Creamos la entidad user)
 - php bin/console make:registration-form (Con email to verify the user's)
 - En env. añadimos: MAILER_DSN="smtp://xxxxx:yyyyy@smtp1.s.ipzmarketing.com:587"
-- php bin/console doctrine:schema:update --force (Actualizamos la base de datos) 
+- php bin/console doctrine:schema:update --force (Actualizamos la base de datos)
+- php bin/console make:controller Login 
+- Añadir el formulario de login y el controlador
+- php bin/console lexik:jwt:generate-keypair (En config, jwt creas las claves públicas y privadas)
 
 # TODO
 
@@ -50,4 +55,8 @@ Run "php bin/console make:migration" to generate a migration for the newly added
 
 https://symfony.com/doc/5.4/security/user_providers.html
 https://symfony.com/doc/master/mailer.html
+https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/index.html#installatio
+https://symfony.com/doc/5.4/security.html#form-login
+
+
 
