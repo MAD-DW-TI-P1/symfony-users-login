@@ -18,25 +18,36 @@ Instalación de Symfony y creación de test
 - composer require symfony/maker-bundle
 - composer require form validator twig-bundle security-csrf annotations
 - composer require symfony/security-bundle
+- composer require symfonycasts/verify-email-bundle
+- composer require symfony/mailer  
 
 
 
 # Configuración y creación de entidades
 
 - Modificamos el .env para que genere un sqlite (https://www.sqlite.org/index.html)
-- php bin/console make:entity (Creamos la entidad user)
-- php bin/console make:crud (Creamos el CRUD de la entidad)
+- php bin/console make:user (Creamos la entidad user)
+- php bin/console make:registration-form (Con email to verify the user's)
+- En env. añadimos: MAILER_DSN="smtp://xxxxx:yyyyy@smtp1.s.ipzmarketing.com:587"
 - php bin/console doctrine:schema:update --force (Actualizamos la base de datos) 
 
+# TODO
+
+In RegistrationController::verifyUserEmail():
+    * Customize the last redirectToRoute() after a successful email verification.
+    * Make sure you're rendering success flash messages or change the $this->addFlash() line.
+Review and customize the form, controller, and templates as needed.
+Run "php bin/console make:migration" to generate a migration for the newly added User::isVerified property.
 
 # Rutas de la aplicación:
 
 | URL path                    | Description           | 
 | :--------------------------:|:---------------------:|
-| /user                    |  Listado de usuarios  | 
+| /register                    |  Registro de usuarios  | 
 
 
 # Referencias
 
 https://symfony.com/doc/5.4/security/user_providers.html
+https://symfony.com/doc/master/mailer.html
 
