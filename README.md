@@ -34,6 +34,7 @@ Instalación de Symfony y creación de test
 - php bin/console doctrine:schema:update --force (Actualizamos la base de datos)
 - php bin/console make:controller Login 
 - Añadir el formulario de login y el controlador
+
 - php bin/console lexik:jwt:generate-keypair (En config, jwt creas las claves públicas y privadas)
 
 # TODO
