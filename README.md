@@ -2,7 +2,7 @@
 
 # Symfony login
 
-Instalación de Symfony y creación de test
+Instalación de Symfony y creación de usuarios con validación por email
 
 # Requisitos
 
@@ -33,23 +33,16 @@ Instalación de Symfony y creación de test
 - En env. añadimos: MAILER_DSN="smtp://xxxxx:yyyyy@smtp1.s.ipzmarketing.com:587"
 - php bin/console doctrine:schema:update --force (Actualizamos la base de datos)
 - php bin/console make:controller Login 
-- Añadir el formulario de login y el controlador
-
+- Añadir el formulario de login en la vista y el controlador
 - php bin/console lexik:jwt:generate-keypair (En config, jwt creas las claves públicas y privadas)
-
-# TODO
-
-In RegistrationController::verifyUserEmail():
-    * Customize the last redirectToRoute() after a successful email verification.
-    * Make sure you're rendering success flash messages or change the $this->addFlash() line.
-Review and customize the form, controller, and templates as needed.
-Run "php bin/console make:migration" to generate a migration for the newly added User::isVerified property.
 
 # Rutas de la aplicación:
 
 | URL path                    | Description           | 
 | :--------------------------:|:---------------------:|
-| /register                    |  Registro de usuarios  | 
+| /register                    |  Registro de usuarios| 
+| /login                       |  Login               |
+| /home                        |  Home                |
 
 
 # Referencias
