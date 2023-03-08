@@ -33,7 +33,7 @@ Instalación de Symfony y creación de usuarios con validación por email
 - En env. añadimos: MAILER_DSN="smtp://xxxxx:yyyyy@smtp1.s.ipzmarketing.com:587"
 - php bin/console doctrine:schema:update --force (Actualizamos la base de datos)
 - php bin/console make:controller Login 
-- Añadir el formulario de login en la vista y el controlador
+- Añadir el formulario de login en la vista y el controlador | Otra opción es utilizar php bin/console make:auth
 - php bin/console lexik:jwt:generate-keypair (En config, jwt creas las claves públicas y privadas)
 
 # Rutas de la aplicación:
