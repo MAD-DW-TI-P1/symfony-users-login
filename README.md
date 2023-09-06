@@ -24,7 +24,6 @@ Instalación de Symfony y creación de usuarios con validación por email
 - composer require "lexik/jwt-authentication-bundle"
 
 
-
 # Configuración y creación de entidades
 
 - Modificamos el .env para que genere un sqlite (https://www.sqlite.org/index.html)
@@ -35,6 +34,8 @@ Instalación de Symfony y creación de usuarios con validación por email
 - php bin/console make:controller Login 
 - Añadir el formulario de login en la vista y el controlador | Otra opción es utilizar php bin/console make:auth
 - php bin/console lexik:jwt:generate-keypair (En config, jwt creas las claves públicas y privadas)
+- Para el autologin después de registrarse utilizas: use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+y configurar: use App\Security\AppRegisterAuthenticator;
 
 # Rutas de la aplicación:
 

@@ -15,6 +15,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
+// Auto login after registration
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use App\Security\AppRegisterAuthenticator;
+
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
@@ -25,7 +29,13 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(
+        Request $request, 
+        UserPasswordHasherInterface $userPasswordHasher, 
+        EntityManagerInterface $entityManager,
+        GuardAuthenticatorHandler $guardHandler,
+        AppRegisterAuthenticator $appRegisterAuthenticator
+        ): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -43,17 +53,28 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // generate a signed url and email it to the user
-            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-                (new TemplatedEmail())
-                    ->from(new Address('info@coderf5.es', 'Coder F5'))
-                    ->to($user->getEmail())
-                    ->subject('Please Confirm your Email')
-                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            // // generate a signed url and email it to the user
+            // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            //     (new TemplatedEmail())
+            //         ->from(new Address('info@coderf5.es', 'Coder F5'))
+            //         ->to($user->getEmail())
+            //         ->subject('Please Confirm your Email')
+            //         ->htmlTemplate('registration/confirmation_email.html.twig')
+            // );
+            // // do anything else you need here, like send an email
+
+            $response = new Response();
+            $response = $this->redirectToRoute('home');
+
+            $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $appRegisterAuthenticator, // Debes proporcionar tu autenticador aquí
+                'main' // Nombre del firewall que deseas utilizar
             );
-            // do anything else you need here, like send an email
             
-            return $this->redirectToRoute('app_login');
+            return $response;
+            //return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
